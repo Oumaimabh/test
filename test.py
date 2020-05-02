@@ -15,10 +15,10 @@ from math import sin, cos, sqrt, atan2, radians
 # In[12]:
 
 
-ticket_data=pd.read_csv('C:/Users/lol/Downloads/data/ticket_data.csv')
-cities=pd.read_csv('C:/Users/lol/Downloads/data/cities.csv')
-stations=pd.read_csv('C:/Users/lol/Downloads/data/stations.csv')
-providers=pd.read_csv('C:/Users/lol/Downloads/data/providers.csv')
+ticket_data=pd.read_csv('C:/Users/Downloads/data/ticket_data.csv')
+cities=pd.read_csv('C:/Users/Downloads/data/cities.csv')
+stations=pd.read_csv('C:/Users/Downloads/data/stations.csv')
+providers=pd.read_csv('C:/Users/Downloads/data/providers.csv')
 
 #Changer le format des dates dans les donnes a 'datetime' pour faciliter la manipulation des dates
 # In[13]:
