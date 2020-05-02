@@ -10,7 +10,7 @@ import datetime
 from math import sin, cos, sqrt, atan2, radians
 
 
-# #importation des donnees
+# #importation des données
 
 # In[12]:
 
@@ -20,7 +20,7 @@ cities=pd.read_csv('C:/Users/Downloads/data/cities.csv')
 stations=pd.read_csv('C:/Users/Downloads/data/stations.csv')
 providers=pd.read_csv('C:/Users/Downloads/data/providers.csv')
 
-#Changer le format des dates dans les donnes a 'datetime' pour faciliter la manipulation des dates
+#Changer les dates dans nos données au format 'datetime' pour faciliter leur manipulation 
 # In[13]:
 
 
@@ -28,7 +28,7 @@ ticket_data['arrival_ts']=pd.to_datetime(ticket_data.arrival_ts)
 ticket_data['departure_ts']=pd.to_datetime(ticket_data.departure_ts)
 ticket_data['duree']=ticket_data['arrival_ts']-ticket_data['departure_ts']
 
-#extraire les prix:min,max.mean, durees:min,max et la duree a partir des variables sum et count
+#extraire les prix:min,max,mean et les durées:min,max et la durée moyenne en la calculant à partir des variables sum et count
 # In[14]:
 
 
@@ -36,8 +36,8 @@ df=ticket_data.groupby(['o_city','d_city']).agg({'price_in_cents': ['min', 'max'
 df[('duree','moyenne')]=df[('duree','sum')]/df[('duree','count')]
 df=df.drop(columns=[('duree','sum'), ('duree','count')])
 
-#joindre les tables ticket_data et cities pour extraires le nom des villes de depart et d'arrivee
-nb:Nous avons defini un trajet a partir des villes de depart et d'arrivee
+#joindre les tables ticket_data et cities pour extraire le nom des villes de départ et d'arrivée
+#nb:Nous avons defini un trajet à partir des villes de départ et d'arrivée
 # In[15]:
 
 
@@ -47,14 +47,13 @@ df=df_o.merge(df_d)
 df.columns = ['id_origine', 'id_destination', 'min_prix','max_prix','moy_prix','min_duree','max_duree'
               ,'moy_duree','name_o','name_d']
 
-#Jointure de 'providers' avec la dataframe df  pour ajouter le type de transport a cette derniere
+#Jointure de 'providers' avec la dataframe df  pour ajouter le type de transport à cette dernière
 # In[27]:
 
 
 df['transport_type']=ticket_data.join(providers[['id','transport_type']].set_index('id'),on='company')['transport_type']
 
-#la fonction getDistanceFromLatLonInKm ci-dessous permet d'extraires les distances entre 
-les villes des departs et des arrivees
+#la fonction getDistanceFromLatLonInKm() ci-dessous permet d'extraire les distances entre les villes des départs et des arrivées
 # In[28]:
 
 
@@ -70,7 +69,7 @@ def getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2):
         distance.append(R * c)
     return(distance)
 
-#Jointure de 'cities' et de la dataframe df  pour ajouter la distance entre les villes a cette derniere
+#Jointure de 'cities' et de la dataframe df  pour ajouter la distance entre les villes a cette dernière
 # In[29]:
 
 
@@ -94,8 +93,8 @@ for i in df['distance']:
         class_dist.append('2000_')
 df['class_dist']=class_dist
 
-#Grouper la dataframe selon l'interval auquel appartient la distance entre les villes de departs et 
-d'arrivee puis selon le type de transport et afficher le prix moyen et la duree moyenne
+#Grouper la dataframe selon l'interval auquel appartient la distance entre les villes des départs et 
+#des arrivées puis selon le type de transport et afficher leur prix moyen et leur durée moyenne
 # In[31]:
 
 
